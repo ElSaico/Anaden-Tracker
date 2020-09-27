@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
@@ -20,11 +21,13 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+
 class Weapon(models.Model):
     weapon = models.CharField(max_length=30, default='', blank=True)
 
     def __str__(self):
         return f'{self.id} - {self.weapon}'
+
 
 class Loot(models.Model):
     loot = models.CharField(max_length=30, default='', blank=True)
@@ -32,11 +35,12 @@ class Loot(models.Model):
     def __str__(self):
         return f'{self.id} - {self.loot}'
 
+
 class Fish(models.Model):
-    #User authentication
+    # User authentication
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fishes')
 
-    #Description Fields of Fishes
+    # Description Fields of Fishes
     number = models.PositiveIntegerField(default='0')
     description = models.CharField(max_length=1, default='', blank=True)
     name = models.CharField(max_length=30, default='', blank=True)
@@ -60,7 +64,7 @@ class Fish(models.Model):
     weapon = models.ManyToManyField(Weapon, blank=True, default=None, related_name='weapons')
     loot = models.ManyToManyField(Loot, blank=True, default=None, related_name='loots')
 
-    #Fishes' Spots
+    # Fishes' Spots
     lake_tiilen = models.BooleanField(default=False)
     dragon_palace = models.BooleanField(default=False)
     acteul = models.BooleanField(default=False)
